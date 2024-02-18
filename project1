@@ -1,0 +1,151 @@
+#include <iostream>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+int main()
+{
+    string text, key, decryptedText = "", encryptedText = "";
+    int choice, shift, choice2, keyIndex = 0;
+
+    cout << "Choose method:" << endl;
+    cout << "1. Caesar's cipher" << endl;
+    cout << "2. Vigenere cipher" << endl;
+
+
+    while (choice != 1 && choice != 2)
+    {
+        cout << "Wrong choice, please choose again:" << endl;
+        cin >> choice;
+    }
+
+    if (choice == 1)
+    {
+        cout << "Choose:" << endl;
+        cout << "1. Encrypt" << endl;
+        cout << "2. Decrypt" << endl;
+        cin >> choice2;
+
+        while (choice2 != 1 && choice2 != 2)
+        {
+            cout << "Wrong choice, please choose again:" << endl;
+            cin >> choice2;
+        }
+
+        if (choice2 == 1)
+        {
+
+            cout << "Enter shift: ";
+            cin >> shift;
+            for (char c : text)
+            {
+                if (isalpha(c))
+                {
+                    if (isupper(c))
+                    {
+                        c = 'A' + (c - 'A' + shift) % 26;
+                    }
+                    else
+                    {
+                        c = 'a' + (c - 'a' + shift) % 26;
+                    }
+                }
+                encryptedText += c;
+            }
+
+            cout << "Encrypted text: " << encryptedText;
+        }
+
+        else if (choice2 == 2)
+        {
+            cout << "Enter shift: ";
+            cin >> shift;
+            for (char c : text)
+            {
+                if (isalpha(c))
+                {
+                    if (isupper(c))
+                    {
+                        c = 'A' + (c - 'A' - shift + 26) % 26;
+                    }
+                    else
+                    {
+                        c = 'a' + (c - 'a' - shift + 26) % 26;
+                    }
+                }
+                decryptedText += c;
+            }
+            cout << "Decrypted text: " << decryptedText;
+        }
+    }
+
+    else if (choice == 2)
+    {
+        cout << "Choose:" << endl;
+        cout << "1. Encrypt" << endl;
+        cout << "2. Decrypt" << endl;
+        cin >> choice2;
+
+        while (choice2 != 1 && choice2 != 2)
+        {
+            cout << "Wrong choice, please choose again:" << endl;
+            cin >> choice2;
+        }
+
+        if (choice2 == 1)
+        {
+            cout << "Enter key: ";
+            cin >> key;
+            for (char c : text)
+            {
+                if (isalpha(c))
+                {
+                    char base;
+                    if (isupper(c))
+                    {
+                        base = 'A';
+                    }
+                    else
+                    {
+                        base = 'a';
+                    }
+                    char keyChar = toupper(key[keyIndex]);
+                    int shift = keyChar - 'A';
+                    c = base + (c - base + shift) % 26;
+                    keyIndex = (keyIndex + 1) % key.length();
+                }
+                encryptedText += c;
+            }
+
+            cout << "Encrypted text: " << encryptedText;
+        }
+        else if (choice2 == 2)
+        {
+            cout << "Enter key: ";
+            cin >> key;
+            for (char c : text)
+            {
+                if (isalpha(c))
+                {
+                    char base;
+                    if (isupper(c))
+                    {
+                        base = 'A';
+                    }
+                    else
+                    {
+                        base = 'a';
+                    }
+                    char keyChar = toupper(key[keyIndex]);
+                    int shift = keyChar - 'A';
+                    c = base + (c - base - shift + 26) % 26;
+                    keyIndex = (keyIndex + 1) % key.length();
+                }
+                decryptedText += c;
+            }
+            cout << "Decrypted text: " << decryptedText;
+        }
+    }
+    return 0;
+}
