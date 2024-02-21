@@ -9,142 +9,144 @@ int main()
     string text, key, decryptedText = "", encryptedText = "";
     int choice, shift, choice2, keyIndex = 0;
 
+    // Ввод текста и выбор шифра
+    cout << "Enter text: ";
+    getline(cin, text); // Вводится текст
     cout << "Choose method:" << endl;
     cout << "1. Caesar's cipher" << endl;
     cout << "2. Vigenere cipher" << endl;
+    cin >> choice; // Вводится цифра операции
 
-
-    while (choice != 1 && choice != 2)
-    {
-        cout << "Wrong choice, please choose again:" << endl;
-        cin >> choice;
-    }
-
+    // Если выбран шифр Цезаря
     if (choice == 1)
     {
+        // Выбор шифровки
         cout << "Choose:" << endl;
         cout << "1. Encrypt" << endl;
         cout << "2. Decrypt" << endl;
-        cin >> choice2;
+        cin >> choice2; // Вводится цифра нужной операции
 
-        while (choice2 != 1 && choice2 != 2)
-        {
-            cout << "Wrong choice, please choose again:" << endl;
-            cin >> choice2;
-        }
-
+        // Если выбрана зашифровка
         if (choice2 == 1)
         {
 
             cout << "Enter shift: ";
-            cin >> shift;
+            cin >> shift; // Вводится количество сдвигов для зашифровки
+
             for (char c : text)
             {
-                if (isalpha(c))
+                if (isalpha(c)) // Проверка на букву
                 {
-                    if (isupper(c))
+                    if (isupper(c)) // Если буква заглавная
                     {
                         c = 'A' + (c - 'A' + shift) % 26;
                     }
-                    else
+                    else // Если буква прописная
                     {
                         c = 'a' + (c - 'a' + shift) % 26;
                     }
                 }
-                encryptedText += c;
+                encryptedText += c; // Добавление каждой зашифрованной буквы в новую пременную
             }
 
-            cout << "Encrypted text: " << encryptedText;
+            cout << "Encrypted text: " << encryptedText; // Вывод зашифрованного текста
         }
 
+        // Если выбрана расшифровка
         else if (choice2 == 2)
         {
             cout << "Enter shift: ";
-            cin >> shift;
+            cin >> shift; // Вводится количество сдвигов для расшифровки
+
             for (char c : text)
             {
-                if (isalpha(c))
+                if (isalpha(c)) // Проверка на букву
                 {
-                    if (isupper(c))
+                    if (isupper(c)) // Если буква заглавная
                     {
                         c = 'A' + (c - 'A' - shift + 26) % 26;
                     }
-                    else
+                    else // Если буква прописная
                     {
                         c = 'a' + (c - 'a' - shift + 26) % 26;
                     }
                 }
-                decryptedText += c;
+                decryptedText += c; // Добавление каждой расшифрованной буквы в новую пременную
             }
-            cout << "Decrypted text: " << decryptedText;
+            cout << "Decrypted text: " << decryptedText; // Вывод расшифрованного текста
         }
     }
 
+    // Если выбран шифр Вижинера
     else if (choice == 2)
     {
+        // Выбор шифровки
         cout << "Choose:" << endl;
         cout << "1. Encrypt" << endl;
         cout << "2. Decrypt" << endl;
-        cin >> choice2;
+        cin >> choice2; // Вводится цифра нужной операции
 
-        while (choice2 != 1 && choice2 != 2)
-        {
-            cout << "Wrong choice, please choose again:" << endl;
-            cin >> choice2;
-        }
-
+        // Если выбрана зашифровка
         if (choice2 == 1)
         {
             cout << "Enter key: ";
-            cin >> key;
+            cin >> key; // Вводится ключ для зашифровки
+
             for (char c : text)
             {
-                if (isalpha(c))
+                if (isalpha(c)) // Проверка на букву
                 {
                     char base;
-                    if (isupper(c))
+                    if (isupper(c)) // Если буква заглавная
                     {
-                        base = 'A';
+                        char keyChar = toupper(key[keyIndex]);
+                        shift = keyChar - 'A';
+                        c = 'A' + (c - 'A' + shift) % 26;
+                        keyIndex = (keyIndex + 1) % key.length();
                     }
-                    else
+                    else // Если буква прописная
                     {
-                        base = 'a';
+                        char keyChar = toupper(key[keyIndex]);
+                        shift = keyChar - 'A';
+                        c = 'a' + (c - 'a' + shift) % 26;
+                        keyIndex = (keyIndex + 1) % key.length();
                     }
-                    char keyChar = toupper(key[keyIndex]);
-                    int shift = keyChar - 'A';
-                    c = base + (c - base + shift) % 26;
-                    keyIndex = (keyIndex + 1) % key.length();
                 }
-                encryptedText += c;
+                encryptedText += c; // Добавление каждой зашифрованной буквы в новую пременную
             }
 
-            cout << "Encrypted text: " << encryptedText;
+            cout << "Encrypted text: " << encryptedText; // Вывод зашифрованного текста
         }
+
+        // Если выбрана расшифровка
         else if (choice2 == 2)
         {
             cout << "Enter key: ";
-            cin >> key;
+            cin >> key; // Вводится ключ для расшифровки
+
             for (char c : text)
             {
-                if (isalpha(c))
+                if (isalpha(c)) // Проверка на букву
                 {
                     char base;
-                    if (isupper(c))
+                    if (isupper(c)) // Если буква заглавная
                     {
-                        base = 'A';
+                        char keyChar = toupper(key[keyIndex]);
+                        shift = keyChar - 'A';
+                        c = 'A' + (c - 'A' - shift + 26) % 26;
+                        keyIndex = (keyIndex + 1) % key.length();
                     }
-                    else
+                    else // Если буква прописная
                     {
-                        base = 'a';
+                        char keyChar = toupper(key[keyIndex]);
+                        shift = keyChar - 'A';
+                        c = 'a' + (c - 'a' - shift + 26) % 26;
+                        keyIndex = (keyIndex + 1) % key.length();
                     }
-                    char keyChar = toupper(key[keyIndex]);
-                    int shift = keyChar - 'A';
-                    c = base + (c - base - shift + 26) % 26;
-                    keyIndex = (keyIndex + 1) % key.length();
                 }
-                decryptedText += c;
+                decryptedText += c; // Добавление каждой расшифрованной буквы в новую пременную
             }
-            cout << "Decrypted text: " << decryptedText;
+            cout << "Decrypted text: " << decryptedText; // Вывод расшифрованного текста
         }
     }
     return 0;
